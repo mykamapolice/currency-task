@@ -1,21 +1,20 @@
 import React from 'react';
+import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
+import WelcomePage from "./Components/WelcomePage";
+import ExchangePage from "./Components/ExchangePage";
+import ConverterPage from "./Components/ConventerPage";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/" component={WelcomePage} />
+          <Route path="/exchange" component={ExchangePage} />
+          <Route path="/converter" component={ConverterPage} />
+          <Redirect from="*" to="/" />
+        </Switch>
+      </BrowserRouter>
     </div>
   );
 }
