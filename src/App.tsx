@@ -1,11 +1,12 @@
 import React, {useEffect} from 'react';
 import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
 import WelcomePage from "./Components/WelcomePage";
-import ExchangePage from "./Components/ExchangePage";
-import ConverterPage from "./Components/ConventerPage";
+import ExchangePage from "./Components/ExchangePage/ExchangePage";
+import ConverterPage from "./Components/ConventerPage/ConventerPage";
 import Header from "./Components/Header";
-import {getBaseCurrenciesRates, getCurrenciesRates} from "./redux/reducers/mainReducer";
+import {getCurrenciesRates} from "./redux/reducers/mainReducer";
 import {useTypedDispatch} from "./hooks/redux-hooks/redux-hooks";
+import './app.scss'
 
 function App() {
 
@@ -19,12 +20,13 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Header />
+        <div>
         <Switch>
-          <Route exact path="/" component={WelcomePage} />
           <Route path="/exchange" component={ExchangePage} />
           <Route path="/converter" component={ConverterPage} />
-          <Redirect from="*" to="/" />
+          <Redirect from="*" to="/exchange" />
         </Switch>
+        </div>
       </BrowserRouter>
     </div>
   );
