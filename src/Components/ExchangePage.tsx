@@ -1,20 +1,30 @@
 import React, {useEffect, useState} from 'react';
 import {useForm} from "react-hook-form";
 import {useTypedDispatch, useTypedSelector} from "../hooks/redux-hooks/redux-hooks";
-import {getBaseCurrency} from "../redux/reducers/mainReducer";
+import {getBaseCurrenciesRates} from "../redux/reducers/mainReducer";
+import {setBaseCurrency} from '../redux/reducers/mainReducer'
+import {currenciesRatesArrayElement} from "../redux/reducers/interfaces";
 
 const ExchangePage = () => {
 
-  const [baseCurrency, setBaseCurrency] = useState<string>('USD')
-
   const dispatch = useTypedDispatch()
-  const listOfRatesToBase = useTypedSelector(state => state.currencies.listOfRatesToBase)
+
+  const {listOfCurrencies, listOfRatesToBase, baseCurrency} = useTypedSelector(state => state.currencies)
 
   useEffect(() => {
-    baseCurrency && dispatch(getBaseCurrency({base : baseCurrency}))
+    const savedCurrency = localStorage.getItem('currency')
+    if(savedCurrency) {
+      dispatch(setBaseCurrency(savedCurrency))
+    } else {
+      dispatch(setBaseCurrency( 'PLN'))
+    }
+  }, [])
+
+
+  useEffect(() => {
+    baseCurrency && dispatch(getBaseCurrenciesRates({base : baseCurrency}))
   }, [baseCurrency])
 
-  const { register, handleSubmit } = useForm();
 
   return (
     <div>
@@ -22,17 +32,19 @@ const ExchangePage = () => {
         <label>
           Choose base currency
         </label>
-        <select {...register("currency")} onChange={(e) => {
-          setBaseCurrency(e.target.value)}}>
-          {listOfRatesToBase && Object.entries(listOfRatesToBase).map((item: any) => {
-            return <option value={item[0]}>
-                      {item[0]}
-                    </option>
+        <select
+          onChange={(e) => {dispatch(setBaseCurrency(e.target.value))}}>
+          {listOfCurrencies && listOfCurrencies.map((item: string) => {
+              if(baseCurrency === item) {
+                return <option value={item} key={item} selected> {item} </option>
+              } else {
+                return <option value={item} key={item}> {item} </option>
+              }
           })}
         </select>
       </form>
-      {listOfRatesToBase && Object.entries(listOfRatesToBase).map((item: any) => {
-        return <div>
+      {listOfRatesToBase && listOfRatesToBase.map((item: currenciesRatesArrayElement) => {
+        return <div key={item[0]}>
             <div>
               {item[0]}
             </div>

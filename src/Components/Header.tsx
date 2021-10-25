@@ -10,13 +10,13 @@ const Header = () => {
         to="/exchange"
         activeClassName="selected"
       >
-        Exchange
+        Exchange Rates
       </NavLink>
       <NavLink
         to="/converter"
         activeClassName="selected"
       >
-        Converter page
+        Converter Page
       </NavLink>
     </div>
   );
