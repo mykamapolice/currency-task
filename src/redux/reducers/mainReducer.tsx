@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios, { AxiosResponse } from 'axios'
-import {currenciesRatesArrayElement, ICurrencyState} from "./interfaces";
+import {ICurrencyState} from "./interfaces";
 
 export const getCurrenciesRates = createAsyncThunk<
   any,

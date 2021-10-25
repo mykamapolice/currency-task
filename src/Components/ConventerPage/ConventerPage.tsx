@@ -66,7 +66,7 @@ const ConverterPage = () => {
           <label>
             To
           </label>
-          <Select showSearch onChange={(val) => {// @ts-ignore
+          <Select value={toCurrency} showSearch onChange={(val) => {// @ts-ignore
             setToCurrency(val)}} style={{ minWidth: 100 }}>
             {listOfRatesToBase && listOfRatesToBase.map((item: any) => {
               return <Option value={item[0]} key={item[0]}>
